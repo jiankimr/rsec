@@ -648,23 +648,23 @@ energy_net,mean,10.7222
 
 ---
 
-## 🎯 사용 방법
+##  사용 방법
 
 **메트릭 저장 활성화:**
 ```bash
 python eval.py \
-  --save_metrics true \
-  --action_noise_scale 0.6 \
-  --action_noise_dim "action.eef_pos_delta[2]"
+  --save-metrics true \
+  --args.action-noise-scale 0.6 \
+  --args.action-noise-dim "action.eef_pos_delta[2]"
 ```
 
 **디버그 로깅 활성화:**
 ```bash
 python eval.py \
-  --save_metrics true \
-  --debug_action true \
-  --action_noise_scale 0.6 \
-  --action_noise_dim "action.eef_pos_delta[2]"
+  --args.save-metrics true \
+  --args.debug-action true \
+  --args.action-noise-scale 0.6 \
+  --args.action-noise-dim "action.eef_pos_delta[2]"
 ```
 
 ---
