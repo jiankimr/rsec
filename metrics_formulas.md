@@ -24,14 +24,14 @@ This document defines **actuator jerk**, **kinematic jerk**, and **torque loggin
 
 ### Energy-oriented (average torque)
 $$
-\boxed{\boldsymbol{\tau}_t^{\text{avg}}=\frac{\boldsymbol{\tau}_{t-1}+\boldsymbol{\tau}_t}{2}}
+\boldsymbol{\tau}_t^{\text{avg}}=\frac{\boldsymbol{\tau}_{t-1}+\boldsymbol{\tau}_t}{2}
 $$
 
 Saved as: `torque_{...}.npy` (used for power/energy).
 
 ### Fatigue/Life-oriented (current torque)
 $$
-\boxed{\boldsymbol{\tau}_t^{\text{cur}}=\boldsymbol{\tau}_t}
+\boldsymbol{\tau}_t^{\text{cur}}=\boldsymbol{\tau}_t
 $$
 
 Saved as: `torque_current_{...}.npy` (used for rainflow–Miner & Life Ratio).
@@ -43,11 +43,11 @@ Saved as: `torque_current_{...}.npy` (used for rainflow–Miner & Life Ratio).
 ### Kinematic jerk (time derivative of acceleration)
 - **Delta (difference) form**
 $$
-\boxed{\mathbf{j}^{\text{kin}}_t=\frac{\mathbf{a}_t-\mathbf{a}_{t-1}}{\Delta t}}
+\mathbf{j}^{\text{kin}}_t=\frac{\mathbf{a}_t-\mathbf{a}_{t-1}}{\Delta t}
 $$
 - **Gradient (history) form** (via `np.gradient`)
 $$
-\boxed{\mathbf{j}^{\text{kin,grad}}(t)\approx \frac{d\mathbf{a}}{dt}}
+\mathbf{j}^{\text{kin,grad}}(t)\approx \frac{d\mathbf{a}}{dt}
 $$
 
 Saved as: `kinematic_jerk_delta_{...}.npy`, `kinematic_jerk_gradient_{...}.npy`.
@@ -55,11 +55,11 @@ Saved as: `kinematic_jerk_delta_{...}.npy`, `kinematic_jerk_gradient_{...}.npy`.
 ### Actuator jerk (time derivative of torque)
 - **Delta (difference) form**
 $$
-\boxed{\mathbf{j}^{\text{act}}_t=\frac{\boldsymbol{\tau}_t-\boldsymbol{\tau}_{t-1}}{\Delta t}}
+\mathbf{j}^{\text{act}}_t=\frac{\boldsymbol{\tau}_t-\boldsymbol{\tau}_{t-1}}{\Delta t}
 $$
 - **Gradient (history) form** (via `np.gradient`)
 $$
-\boxed{\mathbf{j}^{\text{act,grad}}(t)\approx \frac{d\boldsymbol{\tau}}{dt}}
+\mathbf{j}^{\text{act,grad}}(t)\approx \frac{d\boldsymbol{\tau}}{dt}
 $$
 
 Saved as: `actuator_jerk_delta_{...}.npy`, `actuator_jerk_gradient_{...}.npy`.
@@ -70,22 +70,22 @@ Saved as: `actuator_jerk_delta_{...}.npy`, `actuator_jerk_gradient_{...}.npy`.
 
 ### Per-step power (sum across joints)
 $$
-\boxed{P_t=\sum_{j=1}^{n}\tau_{t,j}^{\text{avg}}\,v_{t,j}^{\text{avg}}}\quad [\mathrm{W}],\qquad
+P_t=\sum_{j=1}^{n}\tau_{t,j}^{\text{avg}}\,v_{t,j}^{\text{avg}}\quad [\mathrm{W}],\qquad
 \mathbf{v}_t^{\text{avg}}=\frac{\mathbf{v}_{t-1}+\mathbf{v}_t}{2}.
 $$
 
 ### Per-step energy (keep sign)
 $$
-\boxed{E_t=P_t\,\Delta t}\quad [\mathrm{J}]
+E_t=P_t\,\Delta t\quad [\mathrm{J}]
 $$
 - **Sign meaning**: $E_t>0$ draw (consumed), $E_t<0$ regen (returned).
 
 ### Aggregates (explicit regen logging)
 $$
-\boxed{E_{\text{draw}}=\sum_t \max(E_t,0),\quad
+E_{\text{draw}}=\sum_t \max(E_t,0),\quad
 E_{\text{regen}}=\sum_t \lvert \min(E_t,0)\rvert,\quad
 E_{\text{net}}=\sum_t E_t,\quad
-E_{\text{total abs}}=E_{\text{draw}}+E_{\text{regen}}}
+E_{\text{total abs}}=E_{\text{draw}}+E_{\text{regen}}
 $$
 
 Saved as: `electric_energy_{...}.npy` (signed timeseries) and CSV summaries for `energy_draw`, `energy_regen`, `energy_net`, `total_abs`.
@@ -100,13 +100,13 @@ Saved as: `electric_energy_{...}.npy` (signed timeseries) and CSV summaries for 
 For each joint $j$, rainflow yields amplitude–count pairs $\{(A_{k,j},N_{k,j})\}_k$.
 With Basquin exponent $m$ and (optional) Goodman correction $A'_{k,j}$:
 $$
-\boxed{D=\sum_{j=1}^{n}\sum_{k} N_{k,j}\,\bigl(A^{(\prime)}_{k,j}\bigr)^m}
+D=\sum_{j=1}^{n}\sum_{k} N_{k,j} \cdot \bigl(A^{(\prime)}_{k,j}\bigr)^m
 $$
 
 ### Life Ratio between two conditions
 With damages $D_{\text{before}},D_{\text{after}}$ computed **from $\boldsymbol{\tau}^{\text{cur}}$**:
 $$
-\boxed{\text{Life Ratio}=\frac{D_{\text{after}}}{D_{\text{before}}}}
+\text{Life Ratio}=\frac{D_{\text{after}}}{D_{\text{before}}}
 $$
 Interpretation example: if $\text{Life Ratio}=471.75$, the *remaining* life fraction is $\approx 1/471.75\approx 0.212\%$, i.e., a **$\sim 99.8\%$** reduction in life compared to baseline for the same exposure.
 

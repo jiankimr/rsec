@@ -32,6 +32,9 @@ python analyze/compare_metrics.py \
 --after_dir ./analysis/analysis_libero_10_20251107_145142_noise_05000_dim_action.eef_pos_delta[2]/
 ```
 
+### Result example
+See "rsec/(Result_example)comparison_analysis_libero_10_20251107_175236_noise_05010_dim_action.eef_pos_delta_2_.txt"
+
 ---
 
 ## 📊 Action Noise Configuration

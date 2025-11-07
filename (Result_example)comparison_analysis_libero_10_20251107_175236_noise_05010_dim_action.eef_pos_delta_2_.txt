@@ -1,0 +1,801 @@
+
+========================================================================================================================
+⚙️  NPY 기반 피로 손상 & 수명비 비교 (RAINFLOW 알고리즘)
+========================================================================================================================
+
+📊 NPY 기반 전체 요약 통계 (모든 파일 종합):
+
+  평균 수명비:       312.9250x
+  최소 수명비:       52.3492x (가장 양호)
+  최대 수명비:       1324.3260x (가장 악화)
+  비교된 파일:       172개
+
+  ⚠️  결론: 노이즈로 인해 평균 손상이 약 31192.5% 증가 → 수명 단축
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+⚙️  Joint별 분석 (각 조인트별 평균 손상 및 수명비):
+
+Joint    | Before Damage        | After Damage         | 수명비          | 상태                            
+------------------------------------------------------------------------------------------------------------------------
+Joint_0  |       3.357755e+03 |       3.700747e+04 |    17.8938x | 🔴 📈 심각 (수명 크게 단축)
+Joint_1  |       4.820462e+04 |       1.132207e+07 |   385.9169x | 🔴 📈 심각 (수명 크게 단축)
+Joint_2  |       2.580885e+03 |       1.452614e+04 |     8.3410x | 🔴 📈 심각 (수명 크게 단축)
+Joint_3  |       3.930750e+03 |       4.193360e+05 |   222.1817x | 🔴 📈 심각 (수명 크게 단축)
+Joint_4  |       4.150014e+02 |       3.585629e+03 |    12.0360x | 🔴 📈 심각 (수명 크게 단축)
+Joint_5  |       6.225035e+02 |       3.310309e+04 |    84.6308x | 🔴 📈 심각 (수명 크게 단축)
+Joint_6  |       1.147859e+02 |       1.622015e+02 |     2.0679x | 🔴 📈 심각 (수명 크게 단축)
+
+⚠️  가장 취약한 조인트: Joint_1 (수명비: 385.9169x)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+📁 매칭된 파일 172개 발견
+
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_0_success.npy | 수명비: 404.6500 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_10_success.npy | 수명비: 1009.5216 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_11_success.npy | 수명비: 148.8569 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_12_success.npy | 수명비: 298.4712 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_13_success.npy | 수명비: 624.8578 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_14_success.npy | 수명비: 302.7475 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_15_success.npy | 수명비: 651.1641 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_16_success.npy | 수명비: 414.8558 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_17_success.npy | 수명비: 309.5896 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_18_success.npy | 수명비: 571.2509 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_19_success.npy | 수명비: 389.8284 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_1_success.npy | 수명비: 164.6031 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_2_success.npy | 수명비: 457.3036 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_3_success.npy | 수명비: 339.7901 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_4_success.npy | 수명비: 526.3353 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_5_success.npy | 수명비: 228.5903 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_6_success.npy | 수명비: 747.2188 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_7_success.npy | 수명비: 249.9734 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_8_success.npy | 수명비: 556.6637 (단축 ⬆️)
+  torque_current_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy_9_success.npy | 수명비: 293.0396 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_0_success.npy                     | 수명비: 452.9422 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_10_success.npy                    | 수명비: 357.6257 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_11_success.npy                    | 수명비: 485.1094 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_13_failure.npy                    | 수명비: 223.0701 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_14_success.npy                    | 수명비: 687.0609 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_17_success.npy                    | 수명비: 1144.1872 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_18_success.npy                    | 수명비: 345.8732 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_19_success.npy                    | 수명비: 245.6571 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_1_success.npy                     | 수명비: 339.0275 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_2_success.npy                     | 수명비: 538.5453 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_3_success.npy                     | 수명비: 175.2695 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_4_success.npy                     | 수명비: 689.5376 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_5_success.npy                     | 수명비: 615.5363 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_7_failure.npy                     | 수명비: 258.1783 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_8_success.npy                     | 수명비: 409.0730 (단축 ⬆️)
+  torque_current_put_both_moka_pots_on_the_stove_9_success.npy                     | 수명비: 173.9474 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_0_success.npy | 수명비: 157.3662 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_10_success.npy | 수명비: 269.2574 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_12_success.npy | 수명비: 66.5514 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_13_success.npy | 수명비: 111.7961 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_14_success.npy | 수명비: 53.7947 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_15_success.npy | 수명비: 143.7612 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_16_success.npy | 수명비: 84.6715 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_17_success.npy | 수명비: 118.6270 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_18_success.npy | 수명비: 79.1192 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_19_success.npy | 수명비: 64.8023 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_2_success.npy | 수명비: 68.1914 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_3_success.npy | 수명비: 101.4121 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_4_success.npy | 수명비: 147.1147 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_5_success.npy | 수명비: 245.0313 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_6_success.npy | 수명비: 302.2006 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_7_success.npy | 수명비: 121.4013 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_8_success.npy | 수명비: 63.8853 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_9_success.npy | 수명비: 101.0755 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_0_success.npy | 수명비: 189.2739 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_10_success.npy | 수명비: 349.1321 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_11_success.npy | 수명비: 258.6435 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_12_success.npy | 수명비: 498.9003 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_13_success.npy | 수명비: 230.2651 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_14_success.npy | 수명비: 327.6897 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_15_success.npy | 수명비: 433.1630 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_16_success.npy | 수명비: 239.9531 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_17_success.npy | 수명비: 389.2445 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_19_success.npy | 수명비: 123.8488 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_1_success.npy | 수명비: 296.1715 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_2_success.npy | 수명비: 438.1111 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_3_success.npy | 수명비: 432.7202 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_4_success.npy | 수명비: 588.9251 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_5_success.npy | 수명비: 232.2324 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_6_success.npy | 수명비: 648.3542 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_7_success.npy | 수명비: 430.6996 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_8_success.npy | 수명비: 364.7425 (단축 ⬆️)
+  torque_current_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_9_success.npy | 수명비: 310.9247 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_0_success.npy | 수명비: 76.4518 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_10_success.npy | 수명비: 128.2692 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_11_success.npy | 수명비: 81.7219 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_12_success.npy | 수명비: 117.3031 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_13_success.npy | 수명비: 177.7412 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_14_success.npy | 수명비: 104.1050 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_15_success.npy | 수명비: 146.2200 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_16_success.npy | 수명비: 106.3978 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_18_success.npy | 수명비: 142.4206 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_19_success.npy | 수명비: 175.2593 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_1_success.npy | 수명비: 194.6768 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_2_success.npy | 수명비: 84.0740 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_3_success.npy | 수명비: 73.8987 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_4_success.npy | 수명비: 92.7229 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_5_success.npy | 수명비: 198.7670 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_6_success.npy | 수명비: 89.7925 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_7_success.npy | 수명비: 75.3054 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_8_success.npy | 수명비: 96.1967 (단축 ⬆️)
+  torque_current_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_9_success.npy | 수명비: 52.3492 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_0_success.npy | 수명비: 524.6272 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_10_success.npy | 수명비: 149.4737 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_12_success.npy | 수명비: 244.8966 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_13_success.npy | 수명비: 241.0817 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_15_success.npy | 수명비: 556.8613 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_16_success.npy | 수명비: 249.3629 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_17_success.npy | 수명비: 446.7399 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_18_success.npy | 수명비: 246.9677 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_19_success.npy | 수명비: 336.2959 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_1_success.npy | 수명비: 458.2519 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_2_success.npy | 수명비: 395.6154 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_4_success.npy | 수명비: 489.4078 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_5_success.npy | 수명비: 583.6900 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_7_success.npy | 수명비: 87.5767 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_8_success.npy | 수명비: 537.3014 (단축 ⬆️)
+  torque_current_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it_9_success.npy | 수명비: 381.4717 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_0_success.npy | 수명비: 996.7530 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_10_success.npy | 수명비: 396.8954 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_12_success.npy | 수명비: 502.3451 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_13_success.npy | 수명비: 454.0893 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_15_success.npy | 수명비: 416.5321 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_16_success.npy | 수명비: 363.1583 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_17_success.npy | 수명비: 237.0525 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_18_failure.npy | 수명비: 1324.3260 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_19_success.npy | 수명비: 510.4520 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_1_success.npy | 수명비: 274.6352 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_2_failure.npy | 수명비: 1198.7525 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_3_success.npy | 수명비: 775.5151 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_4_success.npy | 수명비: 375.9304 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_5_success.npy | 수명비: 209.8014 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_6_success.npy | 수명비: 275.5851 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_7_success.npy | 수명비: 334.2765 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_8_success.npy | 수명비: 291.3755 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_0_success.npy | 수명비: 508.6512 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_10_success.npy | 수명비: 360.0637 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_11_success.npy | 수명비: 273.7899 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_12_success.npy | 수명비: 252.0167 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_15_success.npy | 수명비: 204.6315 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_17_success.npy | 수명비: 304.2170 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_18_success.npy | 수명비: 557.8196 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_19_success.npy | 수명비: 198.8953 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_1_success.npy | 수명비: 416.8063 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_2_success.npy | 수명비: 310.4994 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_3_success.npy | 수명비: 324.2979 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_5_success.npy | 수명비: 353.4587 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_6_success.npy | 수명비: 448.5775 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_7_success.npy | 수명비: 391.0456 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_8_success.npy | 수명비: 407.2098 (단축 ⬆️)
+  torque_current_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_9_success.npy | 수명비: 300.6571 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_0_success.npy | 수명비: 199.6621 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_10_success.npy | 수명비: 136.8111 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_12_success.npy | 수명비: 69.0087 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_13_success.npy | 수명비: 122.1421 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_14_success.npy | 수명비: 96.5501 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_15_success.npy | 수명비: 62.5699 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_16_success.npy | 수명비: 103.3274 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_17_success.npy | 수명비: 53.1217 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_18_success.npy | 수명비: 229.1524 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_1_success.npy | 수명비: 73.5000 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_2_success.npy | 수명비: 92.2740 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_5_success.npy | 수명비: 154.7876 (단축 ⬆️)
+  torque_current_put_the_yellow_and_white_mug_in_the_microwave_and_close_it_6_success.npy | 수명비: 141.9976 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_0_success.npy        | 수명비: 208.8604 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_10_success.npy       | 수명비: 340.9270 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_11_success.npy       | 수명비: 416.2067 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_12_success.npy       | 수명비: 170.6612 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_14_success.npy       | 수명비: 250.2403 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_15_success.npy       | 수명비: 243.3843 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_16_failure.npy       | 수명비: 119.2392 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_18_success.npy       | 수명비: 281.3320 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_19_success.npy       | 수명비: 340.5385 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_1_success.npy        | 수명비: 205.1482 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_2_success.npy        | 수명비: 380.6883 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_3_success.npy        | 수명비: 184.5701 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_4_success.npy        | 수명비: 234.4363 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_5_success.npy        | 수명비: 127.6607 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_6_success.npy        | 수명비: 181.8291 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_7_success.npy        | 수명비: 163.3239 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_8_success.npy        | 수명비: 222.8190 (단축 ⬆️)
+  torque_current_turn_on_the_stove_and_put_the_moka_pot_on_it_9_success.npy        | 수명비: 609.9108 (단축 ⬆️)
+
+========================================================================================================================
+📊 CSV 기반 물리량 비교 (BASELINE vs WITH NOISE)
+========================================================================================================================
+
+🔋 Energy (전기 에너지)
+------------------------------------------------------------------------------------------------------------------------
+  energy_draw.mean                              | Before:       0.1474±  0.0444 → After:       0.3032±  0.0881 | Δ +105.6% ↑
+  energy_draw.sum                               | Before:      38.5286± 11.4866 → After:      82.1826± 45.0162 | Δ +113.3% ↑
+  energy_net.mean                               | Before:       0.0696±  0.0448 → After:       0.2401±  0.0822 | Δ +244.8% ↑
+  energy_net.sum                                | Before:      18.1166± 11.8548 → After:      65.4442± 41.1552 | Δ +261.2% ↑
+  energy_regen.mean                             | Before:       0.0778±  0.0239 → After:       0.0630±  0.0152 | Δ  -19.0% ↓
+  energy_regen.sum                              | Before:      20.4119±  6.2600 → After:      16.7384±  5.3668 | Δ  -18.0% ↓
+
+⚙️  Torque (모터 토크)
+------------------------------------------------------------------------------------------------------------------------
+  torque_average.mean                           | Before:      -1.3205±  0.7734 → After:      -0.9857±  0.7531 | Δ  -25.4% ↓
+  torque_average.max                            | Before:      25.8354±  6.6049 → After:      48.2641± 13.8075 | Δ  +86.8% ↑
+  torque_average.std                            | Before:      13.6495±  1.7664 → After:      17.4088±  0.9359 | Δ  +27.5% ↑
+  torque_current.mean                           | Before:      -1.3227±  0.7746 → After:      -0.9864±  0.7538 | Δ  -25.4% ↓
+  torque_current.max                            | Before:      27.7953±  7.5371 → After:      63.6681± 12.6702 | Δ +129.1% ↑
+  torque_current.std                            | Before:      13.7036±  1.7629 → After:      21.0884±  0.6592 | Δ  +53.9% ↑
+
+🏃 Kinematics (운동학)
+------------------------------------------------------------------------------------------------------------------------
+  acceleration.mean                             | Before:      -0.0447±  0.0379 → After:      -0.0811±  0.0506 | Δ  +81.4% ↑
+  acceleration.max                              | Before:       5.3249±  3.4558 → After:      10.8341±  7.7785 | Δ +103.5% ↑
+  acceleration.std                              | Before:       0.6967±  0.2189 → After:       1.7918±  0.5206 | Δ +157.2% ↑
+  velocity.mean                                 | Before:       0.0208±  0.0142 → After:       0.0214±  0.0147 | Δ   +2.8% ↑
+  velocity.max                                  | Before:       0.7217±  0.1651 → After:       0.8977±  0.2746 | Δ  +24.4% ↑
+  velocity.std                                  | Before:       0.2113±  0.0340 → After:       0.2349±  0.0331 | Δ  +11.2% ↑
+
+⚡ Jerk (부드러움/평탄성)
+------------------------------------------------------------------------------------------------------------------------
+  kinematic_jerk_delta.mean                     | Before:      -0.0142±  0.1038 → After:      -0.0183±  0.0923 | Δ  +28.7% ↑
+  kinematic_jerk_delta.max                      | Before:     174.3065±180.2729 → After:     366.2808±284.2629 | Δ +110.1% ↑
+  kinematic_jerk_delta.std                      | Before:      10.7465±  7.1748 → After:      48.0581± 13.7078 | Δ +347.2% ↑
+  actuator_jerk_delta.mean                      | Before:      -0.0829±  0.1442 → After:      -0.0226±  0.4461 | Δ  -72.7% ↓
+  actuator_jerk_delta.max                       | Before:     595.2079±232.4165 → After:    2238.6495±336.0878 | Δ +276.1% ↑
+  actuator_jerk_delta.std                       | Before:      45.7107±  9.7558 → After:     473.2958± 39.2790 | Δ +935.4% ↑
+
+✅ 작업 성공률 비교
+------------------------------------------------------------------------------------------------------------------------
+  Before (No Noise):    91.0% (182/200 episodes)
+  After (With Noise):   90.0% (180/200 episodes)
+  Difference:           -1.0% (악화 ⚠️)
+
+📈 전체 물리량 변화 요약 (모든 메트릭 종합)
+------------------------------------------------------------------------------------------------------------------------
+  평균 변화율:  +135.86% (모든 메트릭 평균)
+  최대 변화율:  +935.42% (가장 큰 증가)
+  최소 변화율:  +2.84% (가장 큰 감소)
+
+  ⚠️  전체 평가: 노이즈로 인해 시스템 성능 악화 (평균 +135.9%)
+
+⚙️  Joint별 실제 토크 분석 (torque_current - 실제 모터 사용 토크):
+
+Joint    | Before Mean     | After Mean      | Before Max      | After Max       | Status              
+------------------------------------------------------------------------------------------------------------------------
+Joint_0  |        0.9500  |        0.9065  |       51.4503  |       80.0000  | 📉 감소 (-4.6%)
+Joint_1  |      -29.3762  |      -26.9661  |       64.1811  |       80.0000  | 📉 감소 (-8.2%)
+Joint_2  |        1.2158  |        1.0803  |       40.7576  |       80.0000  | 📉 감소 (-11.1%)
+Joint_3  |       15.8598  |       15.9095  |       51.1156  |       80.0000  | 📈 증가 (+0.3%)
+Joint_4  |        0.2007  |        0.2417  |       19.0329  |       80.0000  | 📈 증가 (+20.4%)
+Joint_5  |        1.7737  |        1.8007  |       12.0000  |       12.0000  | 📈 증가 (+1.5%)
+Joint_6  |        0.1171  |        0.1222  |        9.8041  |       12.0000  | 📈 증가 (+4.4%)
+
+🏃 Joint별 가속도 분석 (각 조인트의 평균 가속도 비교):
+
+Joint    | Before Mean     | After Mean      | Before Max      | After Max       | Status              
+------------------------------------------------------------------------------------------------------------------------
+Joint_0  |       -0.0065  |       -0.0099  |        0.8277  |        1.3080  | 📈 증가 (+51.0%)
+Joint_1  |       -0.0832  |       -0.2518  |        2.2871  |        6.0669  | 📈 증가 (+202.7%)
+Joint_2  |       -0.0221  |       -0.0283  |        2.3682  |        4.9004  | 📈 증가 (+28.3%)
+Joint_3  |        0.0063  |       -0.0605  |        4.0994  |        7.4317  | 📉 감소 (-1062.7%)
+Joint_4  |       -0.0394  |       -0.0362  |        2.4650  |        4.9171  | 📉 감소 (-8.0%)
+Joint_5  |       -0.0963  |       -0.1097  |        3.0590  |        6.8090  | 📈 증가 (+13.9%)
+Joint_6  |       -0.0717  |       -0.0713  |        2.7528  |        5.1877  | 📉 감소 (-0.6%)
+
+⚙️  Joint별 Average Torque 분석 (torque_average - 평균 토크):
+
+Joint    | Before Mean     | After Mean      | Before Std      | After Std       | Status              
+------------------------------------------------------------------------------------------------------------------------
+Joint_0  |        0.9452  |        0.9001  |        0.0000  |        0.0000  | 📉 감소 (-4.8%)
+Joint_1  |      -29.3553  |      -26.9558  |        0.0000  |        0.0000  | 📈 증가 (+8.2%)
+Joint_2  |        1.2079  |        1.0730  |        0.0000  |        0.0000  | 📉 감소 (-11.2%)
+Joint_3  |       15.8657  |       15.9178  |        0.0000  |        0.0000  | 📈 증가 (+0.3%)
+Joint_4  |        0.2003  |        0.2404  |        0.0000  |        0.0000  | 📈 증가 (+20.1%)
+Joint_5  |        1.7751  |        1.8014  |        0.0000  |        0.0000  | 📈 증가 (+1.5%)
+Joint_6  |        0.1176  |        0.1228  |        0.0000  |        0.0000  | 📈 증가 (+4.4%)
+
+⚡ Joint별 Kinematic Jerk 분석 (kinematic_jerk_delta - 운동학적 점프):
+
+Joint    | Before Mean     | After Mean      | Before Max      | After Max       | Status              
+------------------------------------------------------------------------------------------------------------------------
+Joint_0  |       -0.0231  |       -0.0158  |       26.4855  |       44.7761  | 📈 증가 (+31.5%)
+Joint_1  |       -0.0647  |       -0.0709  |      129.2946  |      311.5813  | 📉 감소 (-9.5%)
+Joint_2  |       -0.0250  |       -0.0173  |       76.8129  |      154.0007  | 📈 증가 (+30.5%)
+Joint_3  |        0.0342  |        0.0210  |      112.7519  |      210.9553  | 📉 감소 (-38.6%)
+Joint_4  |        0.0345  |        0.0262  |       55.4581  |      134.1447  | 📉 감소 (-24.1%)
+Joint_5  |       -0.0320  |       -0.0396  |       74.6294  |      187.6016  | 📉 감소 (-23.8%)
+Joint_6  |       -0.0236  |       -0.0318  |       59.5940  |      120.8801  | 📉 감소 (-34.7%)
+
+🔧 Joint별 Actuator Jerk 분석 (actuator_jerk_delta - 구동기 점프):
+
+Joint    | Before Mean     | After Mean      | Before Max      | After Max       | Status              
+------------------------------------------------------------------------------------------------------------------------
+Joint_0  |        0.1889  |        0.2571  |      237.5920  |      334.0470  | 📈 증가 (+36.1%)
+Joint_1  |       -2.3892  |       -1.9822  |      546.8187  |     2238.6495  | 📈 증가 (+17.0%)
+Joint_2  |        0.3170  |        0.2905  |      239.1261  |      346.5783  | 📉 감소 (-8.4%)
+Joint_3  |        1.1967  |        1.1071  |      397.4265  |      731.5376  | 📉 감소 (-7.5%)
+Joint_4  |        0.0177  |        0.0513  |      127.1970  |      167.5598  | 📈 증가 (+190.5%)
+Joint_5  |        0.1107  |        0.1385  |      136.4974  |      300.7133  | 📈 증가 (+25.1%)
+Joint_6  |       -0.0222  |       -0.0209  |       78.4873  |       88.3611  | 📈 증가 (+6.1%)
+
+========================================================================================================================
+📋 추가 Joint별 세부 분석 (모든 메트릭)
+========================================================================================================================
+
+
+========================================================================================================================
+🔍 JOINT_0 상세 분석
+========================================================================================================================
+
+  📊 acceleration:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          0.8803 |          1.5677 |          0.6875 |       +78.1% | 📈 증가                
+  mean       |         -0.0270 |         -0.0256 |          0.0013 |        +4.9% | 📈 증가                
+  min        |         -0.6652 |         -1.0096 |         -0.3444 |       -51.8% | 📉 감소                
+
+  📊 actuator_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        177.9173 |        282.1626 |        104.2453 |       +58.6% | 📈 증가                
+  mean       |          0.0777 |         -0.3766 |         -0.4543 |      -585.0% | 📉 감소                
+  min        |        -91.3965 |       -230.4667 |       -139.0703 |      -152.2% | 📉 감소                
+
+  📊 actuator_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         68.2500 |         87.6785 |         19.4286 |       +28.5% | 📈 증가                
+  mean       |          0.1703 |         -0.4119 |         -0.5822 |      -341.9% | 📉 감소                
+  min        |        -43.4796 |       -112.8429 |        -69.3633 |      -159.5% | 📉 감소                
+
+  📊 kinematic_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         21.9502 |         31.9470 |          9.9968 |       +45.5% | 📈 증가                
+  mean       |         -0.0013 |         -0.0078 |         -0.0065 |      -481.1% | 📉 감소                
+  min        |        -18.8577 |        -42.4667 |        -23.6090 |      -125.2% | 📉 감소                
+
+  📊 kinematic_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         11.9709 |         18.6420 |          6.6711 |       +55.7% | 📈 증가                
+  mean       |         -0.0032 |          0.0210 |          0.0242 |      +760.2% | 📈 증가                
+  min        |         -9.5458 |        -18.2083 |         -8.6625 |       -90.7% | 📉 감소                
+
+  📊 torque_average:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          8.5634 |          9.3153 |          0.7518 |        +8.8% | 📈 증가                
+  mean       |          0.4293 |          0.2272 |         -0.2020 |       -47.1% | 📉 감소                
+  min        |         -7.6266 |         -8.3172 |         -0.6905 |        -9.1% | 📉 감소                
+
+  📊 torque_current:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          9.9193 |         14.1642 |          4.2450 |       +42.8% | 📈 증가                
+  mean       |          0.4312 |          0.2178 |         -0.2134 |       -49.5% | 📉 감소                
+  min        |         -8.5180 |        -13.7306 |         -5.2126 |       -61.2% | 📉 감소                
+
+  📊 velocity:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          0.2113 |          0.1171 |         -0.0942 |       -44.6% | 📉 감소                
+  mean       |          0.0133 |          0.0143 |          0.0011 |        +7.9% | 📈 증가                
+  min        |         -0.1707 |         -0.1028 |          0.0679 |       +39.8% | 📈 증가                
+
+========================================================================================================================
+🔍 JOINT_1 상세 분석
+========================================================================================================================
+
+  📊 acceleration:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          3.3450 |          6.4367 |          3.0917 |       +92.4% | 📈 증가                
+  mean       |          0.0012 |         -0.1443 |         -0.1455 |    -11758.0% | 📉 감소                
+  min        |         -4.2159 |        -11.1379 |         -6.9220 |      -164.2% | 📉 감소                
+
+  📊 actuator_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        662.2744 |       2662.8012 |       2000.5268 |      +302.1% | 📈 증가                
+  mean       |         -2.2198 |          2.9510 |          5.1709 |      +232.9% | 📈 증가                
+  min        |       -712.5471 |      -2163.0018 |      -1450.4547 |      -203.6% | 📉 감소                
+
+  📊 actuator_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        279.6449 |       1874.4281 |       1594.7832 |      +570.3% | 📈 증가                
+  mean       |         -1.6288 |          5.6910 |          7.3198 |      +449.4% | 📈 증가                
+  min        |       -441.4143 |      -1208.8167 |       -767.4024 |      -173.9% | 📉 감소                
+
+  📊 kinematic_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         68.7021 |        184.3489 |        115.6468 |      +168.3% | 📈 증가                
+  mean       |         -0.0418 |          0.3093 |          0.3511 |      +840.0% | 📈 증가                
+  min        |        -54.1002 |       -295.0322 |       -240.9320 |      -445.3% | 📉 감소                
+
+  📊 kinematic_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         34.0565 |        160.4978 |        126.4413 |      +371.3% | 📈 증가                
+  mean       |          0.0057 |          0.5594 |          0.5537 |     +9715.7% | 📈 증가                
+  min        |        -28.2861 |       -168.6957 |       -140.4096 |      -496.4% | 📉 감소                
+
+  📊 torque_average:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          9.7100 |         54.0750 |         44.3650 |      +456.9% | 📈 증가                
+  mean       |        -20.4449 |        -19.4111 |          1.0338 |        +5.1% | 📈 증가                
+  min        |        -48.6451 |        -79.5889 |        -30.9437 |       -63.6% | 📉 감소                
+
+  📊 torque_current:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         13.3541 |         80.0000 |         66.6459 |      +499.1% | 📈 증가                
+  mean       |        -20.4603 |        -19.2938 |          1.1664 |        +5.7% | 📈 증가                
+  min        |        -53.1687 |        -80.0000 |        -26.8313 |       -50.5% | 📉 감소                
+
+  📊 velocity:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          0.5232 |          0.7355 |          0.2124 |       +40.6% | 📈 증가                
+  mean       |          0.0218 |          0.0230 |          0.0012 |        +5.4% | 📈 증가                
+  min        |         -0.7039 |         -0.7115 |         -0.0076 |        -1.1% | 📉 감소                
+
+========================================================================================================================
+🔍 JOINT_2 상세 분석
+========================================================================================================================
+
+  📊 acceleration:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          4.1915 |          5.9743 |          1.7828 |       +42.5% | 📈 증가                
+  mean       |         -0.0783 |         -0.0636 |          0.0147 |       +18.8% | 📈 증가                
+  min        |         -1.3406 |         -4.3426 |         -3.0020 |      -223.9% | 📉 감소                
+
+  📊 actuator_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        167.1109 |        359.0102 |        191.8992 |      +114.8% | 📈 증가                
+  mean       |          0.1899 |         -0.4757 |         -0.6656 |      -350.5% | 📉 감소                
+  min        |       -122.7903 |       -316.6401 |       -193.8498 |      -157.9% | 📉 감소                
+
+  📊 actuator_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         66.5602 |        176.2856 |        109.7254 |      +164.9% | 📈 증가                
+  mean       |          0.3363 |         -0.6647 |         -1.0010 |      -297.6% | 📉 감소                
+  min        |        -41.3020 |       -237.6870 |       -196.3849 |      -475.5% | 📉 감소                
+
+  📊 kinematic_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         88.8318 |        123.5148 |         34.6830 |       +39.0% | 📈 증가                
+  mean       |          0.0140 |         -0.0632 |         -0.0772 |      -552.9% | 📉 감소                
+  min        |        -80.0345 |       -150.5440 |        -70.5095 |       -88.1% | 📉 감소                
+
+  📊 kinematic_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         45.5980 |         71.9077 |         26.3098 |       +57.7% | 📈 증가                
+  mean       |         -0.0085 |         -0.0159 |         -0.0073 |       -85.4% | 📉 감소                
+  min        |        -40.9785 |        -69.4997 |        -28.5212 |       -69.6% | 📉 감소                
+
+  📊 torque_average:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         12.7310 |          8.5166 |         -4.2144 |       -33.1% | 📉 감소                
+  mean       |          0.5640 |          0.2500 |         -0.3141 |       -55.7% | 📉 감소                
+  min        |         -7.5088 |        -11.4372 |         -3.9284 |       -52.3% | 📉 감소                
+
+  📊 torque_current:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         14.8698 |         11.9382 |         -2.9316 |       -19.7% | 📉 감소                
+  mean       |          0.5690 |          0.2382 |         -0.3307 |       -58.1% | 📉 감소                
+  min        |         -8.3466 |        -13.9088 |         -5.5622 |       -66.6% | 📉 감소                
+
+  📊 velocity:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          0.4142 |          0.3430 |         -0.0712 |       -17.2% | 📉 감소                
+  mean       |          0.0310 |          0.0327 |          0.0017 |        +5.4% | 📈 증가                
+  min        |         -0.3661 |         -0.3055 |          0.0606 |       +16.6% | 📈 증가                
+
+========================================================================================================================
+🔍 JOINT_3 상세 분석
+========================================================================================================================
+
+  📊 acceleration:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          4.9331 |         23.0351 |         18.1020 |      +366.9% | 📈 증가                
+  mean       |          0.1442 |          0.0789 |         -0.0652 |       -45.3% | 📉 감소                
+  min        |         -2.1783 |         -4.8561 |         -2.6778 |      -122.9% | 📉 감소                
+
+  📊 actuator_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        371.5823 |        662.3770 |        290.7947 |       +78.3% | 📈 증가                
+  mean       |          1.0724 |         -0.0762 |         -1.1487 |      -107.1% | 📉 감소                
+  min        |       -554.7860 |       -656.0047 |       -101.2187 |       -18.2% | 📉 감소                
+
+  📊 actuator_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        358.8140 |        328.3531 |        -30.4609 |        -8.5% | 📉 감소                
+  mean       |          0.5276 |         -1.9263 |         -2.4539 |      -465.1% | 📉 감소                
+  min        |       -198.0131 |       -652.0300 |       -454.0169 |      -229.3% | 📉 감소                
+
+  📊 kinematic_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        120.9412 |        474.9065 |        353.9653 |      +292.7% | 📈 증가                
+  mean       |         -0.0210 |         -0.0552 |         -0.0343 |      -163.5% | 📉 감소                
+  min        |       -106.4059 |       -452.9980 |       -346.5921 |      -325.7% | 📉 감소                
+
+  📊 kinematic_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         48.2542 |        232.7227 |        184.4685 |      +382.3% | 📈 증가                
+  mean       |          0.0104 |         -0.1678 |         -0.1781 |     -1720.7% | 📉 감소                
+  min        |        -51.0039 |       -226.1261 |       -175.1222 |      -343.4% | 📉 감소                
+
+  📊 torque_average:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         24.0832 |         35.2951 |         11.2119 |       +46.6% | 📈 증가                
+  mean       |         14.3826 |         15.0828 |          0.7002 |        +4.9% | 📈 증가                
+  min        |         -3.8989 |         -7.6439 |         -3.7450 |       -96.1% | 📉 감소                
+
+  📊 torque_current:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         24.4731 |         45.0011 |         20.5280 |       +83.9% | 📈 증가                
+  mean       |         14.3737 |         15.0422 |          0.6685 |        +4.7% | 📈 증가                
+  min        |         -8.5249 |        -11.4337 |         -2.9089 |       -34.1% | 📉 감소                
+
+  📊 velocity:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          0.8270 |          0.7513 |         -0.0757 |        -9.2% | 📉 감소                
+  mean       |          0.0092 |          0.0185 |          0.0093 |      +101.3% | 📈 증가                
+  min        |         -0.6267 |         -0.5695 |          0.0572 |        +9.1% | 📈 증가                
+
+========================================================================================================================
+🔍 JOINT_4 상세 분석
+========================================================================================================================
+
+  📊 acceleration:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          8.5435 |          4.5263 |         -4.0171 |       -47.0% | 📉 감소                
+  mean       |         -0.0421 |          0.0285 |          0.0706 |      +167.8% | 📈 증가                
+  min        |         -2.7669 |         -4.8175 |         -2.0506 |       -74.1% | 📉 감소                
+
+  📊 actuator_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        142.3542 |        142.2502 |         -0.1040 |        -0.1% | ➡️ 동일               
+  mean       |         -0.0743 |          0.1457 |          0.2200 |      +296.2% | 📈 증가                
+  min        |       -177.7379 |       -152.6661 |         25.0717 |       +14.1% | 📈 증가                
+
+  📊 actuator_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         55.7907 |         60.1911 |          4.4005 |        +7.9% | 📈 증가                
+  mean       |         -0.1362 |          0.1355 |          0.2717 |      +199.5% | 📈 증가                
+  min        |        -56.1048 |        -69.1945 |        -13.0897 |       -23.3% | 📉 감소                
+
+  📊 kinematic_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         74.2657 |        135.8883 |         61.6226 |       +83.0% | 📈 증가                
+  mean       |         -0.0094 |         -0.1957 |         -0.1863 |     -1988.5% | 📉 감소                
+  min        |        -64.7005 |       -122.9908 |        -58.2902 |       -90.1% | 📉 감소                
+
+  📊 kinematic_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         73.9495 |         83.4964 |          9.5470 |       +12.9% | 📈 증가                
+  mean       |          0.0054 |         -0.4162 |         -0.4216 |     -7812.5% | 📉 감소                
+  min        |        -41.5617 |        -87.4588 |        -45.8971 |      -110.4% | 📉 감소                
+
+  📊 torque_average:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          7.7869 |          5.3687 |         -2.4182 |       -31.1% | 📉 감소                
+  mean       |          0.1730 |         -0.0318 |         -0.2048 |      -118.4% | 📉 감소                
+  min        |         -5.5813 |         -7.0497 |         -1.4684 |       -26.3% | 📉 감소                
+
+  📊 torque_current:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          8.7693 |          6.7176 |         -2.0517 |       -23.4% | 📉 감소                
+  mean       |          0.1712 |         -0.0280 |         -0.1992 |      -116.3% | 📉 감소                
+  min        |         -9.1401 |         -8.6107 |          0.5294 |        +5.8% | 📈 증가                
+
+  📊 velocity:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          0.7033 |          0.3415 |         -0.3618 |       -51.4% | 📉 감소                
+  mean       |         -0.0129 |         -0.0171 |         -0.0041 |       -31.9% | 📉 감소                
+  min        |         -1.6251 |         -0.6894 |          0.9357 |       +57.6% | 📈 증가                
+
+========================================================================================================================
+🔍 JOINT_5 상세 분석
+========================================================================================================================
+
+  📊 acceleration:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          4.7311 |          6.8389 |          2.1078 |       +44.6% | 📈 증가                
+  mean       |         -0.1325 |         -0.1199 |          0.0127 |        +9.5% | 📈 증가                
+  min        |         -4.9560 |         -7.1919 |         -2.2359 |       -45.1% | 📉 감소                
+
+  📊 actuator_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |        116.7380 |        270.9973 |        154.2593 |      +132.1% | 📈 증가                
+  mean       |          0.1085 |          0.7620 |          0.6535 |      +602.5% | 📈 증가                
+  min        |       -151.5532 |       -333.1631 |       -181.6100 |      -119.8% | 📉 감소                
+
+  📊 actuator_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         73.2521 |        271.1452 |        197.8931 |      +270.2% | 📈 증가                
+  mean       |          0.1005 |          0.7346 |          0.6341 |      +630.8% | 📈 증가                
+  min        |        -53.2861 |       -143.0797 |        -89.7936 |      -168.5% | 📉 감소                
+
+  📊 kinematic_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         85.7455 |        133.6973 |         47.9518 |       +55.9% | 📈 증가                
+  mean       |          0.0804 |          0.3094 |          0.2290 |      +285.0% | 📈 증가                
+  min        |        -88.6914 |       -178.8878 |        -90.1964 |      -101.7% | 📉 감소                
+
+  📊 kinematic_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         50.0770 |        101.8239 |         51.7470 |      +103.3% | 📈 증가                
+  mean       |          0.0087 |          0.6175 |          0.6088 |     +6974.0% | 📈 증가                
+  min        |        -45.3100 |       -108.1481 |        -62.8382 |      -138.7% | 📉 감소                
+
+  📊 torque_average:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          7.0794 |         10.0728 |          2.9934 |       +42.3% | 📈 증가                
+  mean       |          2.3294 |          1.9627 |         -0.3667 |       -15.7% | 📉 감소                
+  min        |         -3.5031 |         -7.2667 |         -3.7636 |      -107.4% | 📉 감소                
+
+  📊 torque_current:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          7.2765 |         12.0000 |          4.7235 |       +64.9% | 📈 증가                
+  mean       |          2.3272 |          1.9764 |         -0.3508 |       -15.1% | 📉 감소                
+  min        |         -5.4423 |        -11.6658 |         -6.2235 |      -114.4% | 📉 감소                
+
+  📊 velocity:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          0.9789 |          1.0975 |          0.1186 |       +12.1% | 📈 증가                
+  mean       |          0.0117 |          0.0053 |         -0.0064 |       -54.5% | 📉 감소                
+  min        |         -0.9393 |         -1.0703 |         -0.1311 |       -14.0% | 📉 감소                
+
+========================================================================================================================
+🔍 JOINT_6 상세 분석
+========================================================================================================================
+
+  📊 acceleration:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          2.8267 |          3.3974 |          0.5707 |       +20.2% | 📈 증가                
+  mean       |         -0.1198 |         -0.1744 |         -0.0546 |       -45.5% | 📉 감소                
+  min        |         -5.6668 |         -4.4391 |          1.2277 |       +21.7% | 📈 증가                
+
+  📊 actuator_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         57.1721 |         78.3885 |         21.2165 |       +37.1% | 📈 증가                
+  mean       |          0.1062 |          0.0061 |         -0.1000 |       -94.2% | 📉 감소                
+  min        |        -64.1571 |        -76.4747 |        -12.3176 |       -19.2% | 📉 감소                
+
+  📊 actuator_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         24.2482 |         30.9290 |          6.6808 |       +27.6% | 📈 증가                
+  mean       |          0.0251 |         -0.0335 |         -0.0586 |      -233.4% | 📉 감소                
+  min        |        -30.7995 |        -26.5534 |          4.2462 |       +13.8% | 📈 증가                
+
+  📊 kinematic_jerk_delta:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         74.8303 |         58.6849 |        -16.1454 |       -21.6% | 📉 감소                
+  mean       |         -0.0137 |          0.0826 |          0.0963 |      +701.5% | 📈 증가                
+  min        |        -89.5627 |        -77.8178 |         11.7449 |       +13.1% | 📈 증가                
+
+  📊 kinematic_jerk_gradient:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |         40.0298 |         76.0917 |         36.0619 |       +90.1% | 📈 증가                
+  mean       |         -0.0569 |          0.3282 |          0.3851 |      +676.6% | 📈 증가                
+  min        |        -49.6280 |        -40.7544 |          8.8736 |       +17.9% | 📈 증가                
+
+  📊 torque_average:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          2.6279 |          4.1828 |          1.5549 |       +59.2% | 📈 증가                
+  mean       |          0.2510 |          0.2236 |         -0.0274 |       -10.9% | 📉 감소                
+  min        |         -3.0331 |         -1.4643 |          1.5688 |       +51.7% | 📈 증가                
+
+  📊 torque_current:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          2.7929 |          4.8429 |          2.0500 |       +73.4% | 📈 증가                
+  mean       |          0.2537 |          0.2238 |         -0.0299 |       -11.8% | 📉 감소                
+  min        |         -3.0743 |         -3.1153 |         -0.0410 |        -1.3% | 📉 감소                
+
+  📊 velocity:
+  ----------------------------------------------------------------------------------------------------
+  Stat       | Before          | After           | Change          | %Change      | Status              
+  ----------------------------------------------------------------------------------------------------
+  max        |          1.4042 |          0.6812 |         -0.7229 |       -51.5% | 📉 감소                
+  mean       |          0.0959 |          0.0923 |         -0.0036 |        -3.7% | 📉 감소                
+  min        |         -0.7506 |         -0.4734 |          0.2772 |       +36.9% | 📈 증가                
