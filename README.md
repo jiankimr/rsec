@@ -226,7 +226,8 @@ python eval.py --args.action-noise-scale 0.05
 
 By default, `action_noise_scale` is `0.0`, meaning no noise is added.
 
----memo
+memo
+```bash
 # Install gdown for Google Drive downloads
 pip install gdown
 # Download the entire folder (replace FOLDER_ID with the actual ID)
@@ -235,6 +236,6 @@ gdown --folder https://drive.google.com/drive/folders/1rlbXnm-BtRCHCvghMa7CsrNr0
 gdown --folder https://drive.google.com/drive/u/1/folders/121lEY_nt3PRFFY-qjhPmyhMckWUguMqX 
 #libero_object
 https://drive.google.com/drive/folders/121lEY_nt3PRFFY-qjhPmyhMckWUguMqX?usp=sharing
-
+```
 
 z -> 2,4  6-> 7
