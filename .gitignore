@@ -1,0 +1,30 @@
+# ---------- Project-local big artifacts ----------
+model/
+
+# ---------- LIBERO: exclude analysis/results/videos ----------
+LIBERO/analysis/
+LIBERO/results/
+LIBERO/videos/
+# keep placeholders/docs if needed
+#!LIBERO/**/README*
+#!LIBERO/**/.gitkeep
+
+# ---------- Isaac-GR00T: exclude libero_object ----------
+Isaac-GR00T/libero_object/
+Isaac-GR00T/libero_object/**
+
+# ---------- Common ML artifacts anywhere ----------
+**/*.safetensors
+**/*.pt
+**/*.pth
+**/checkpoints/**
+**/outputs/**
+**/wandb/**
+**/logs/**
+
+# ---------- Python/OS noise ----------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
