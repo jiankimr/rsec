@@ -1,184 +1,240 @@
-<div align="center">
-<img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images/libero_logo.png" width="360">
+# RSEC - Robustness Study with Embodied Control
 
+## 🚀 Quick Start Commands
 
-<p align="center">
-<a href="https://github.com/Lifelong-Robot-Learning/LIBERO/actions">
-<img alt="Tests Passing" src="https://github.com/anuraghazra/github-readme-stats/workflows/Test/badge.svg" />
-</a>
-<a href="https://github.com/Lifelong-Robot-Learning/LIBERO/graphs/contributors">
-<img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/Lifelong-Robot-Learning/LIBERO" />
-</a>
-<a href="https://github.com/Lifelong-Robot-Learning/LIBERO/issues">
-<img alt="Issues" src="https://img.shields.io/github/issues/Lifelong-Robot-Learning/LIBERO?color=0088ff" />
+### LIBERO Evaluation
+```bash
+cd LIBERO
+python eval.py --args.action-noise-scale 0.5 --args.action-noise-dim action.eef_pos_delta[2]
+```
 
-## **Benchmarking Knowledge Transfer for Lifelong Robot Learning**
+### GR00T Inference Service
+```bash
+cd Issac-GR00T
+python scripts/inference_service.py --server \
+    --model_path /mnt/lustre/slurm/users/taywonmin/rsec/model/checkpoint-60000 \
+    --embodiment_tag new_embodiment \
+    --data_config libero \
+    --denoising_steps 4 \
+    --port 5555
+```
 
-Bo Liu, Yifeng Zhu, Chongkai Gao, Yihao Feng, Qiang Liu, Yuke Zhu, Peter Stone
+### SLURM Job Submission
+```bash
+srun --gpus=1 --cpus-per-task=4 --mem=16G --time=03:50:00 --nodelist=node7 --pty bash
+```
 
-[[Website]](https://libero-project.github.io)
-[[Paper]](https://arxiv.org/pdf/2306.03310.pdf)
-[[Docs]](https://lifelong-robot-learning.github.io/LIBERO/)
-______________________________________________________________________
-![pull_figure](https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images//fig1.png)
-</div>
-
-**LIBERO** is designed for studying knowledge transfer in multitask and lifelong robot learning problems. Successfully resolving these problems require both declarative knowledge about objects/spatial relationships and procedural knowledge about motion/behaviors. **LIBERO** provides:
-- a procedural generation pipeline that could in principle generate an infinite number of manipulation tasks.
-- 130 tasks grouped into four task suites: **LIBERO-Spatial**, **LIBERO-Object**, **LIBERO-Goal**, and **LIBERO-100**. The first three task suites have controlled distribution shifts, meaning that they require the transfer of a specific type of knowledge. In contrast, **LIBERO-100** consists of 100 manipulation tasks that require the transfer of entangled knowledge. **LIBERO-100** is further splitted into **LIBERO-90** for pretraining a policy and **LIBERO-10** for testing the agent's downstream lifelong learning performance.
-- five research topics.
-- three visuomotor policy network architectures.
-- three lifelong learning algorithms with the sequential finetuning and multitask learning baselines.
+### Compare before(no noise) vs after(noise)
+```bash
+cd LIBERO
+python analyze/compare_metrics.py \
+--before_dir ./analysis/analysis_libero_10_20251107_172053_noise_00000/ \
+--after_dir ./analysis/analysis_libero_10_20251107_145142_noise_05000_dim_action.eef_pos_delta[2]/
+```
 
 ---
 
+## 📊 Action Noise Configuration
 
-# Contents
+### Attack Dimensions Overview
+- **action.eef_pos_delta**: shape (T, 3) → `[x_delta, y_delta, z_delta]`
+- **action.eef_rot_delta**: shape (T, 3) → `[roll_delta, pitch_delta, yaw_delta]`
+- **action.gripper_close**: shape (T, 2) → `[finger1, finger2]`
 
-- [Installation](#Installation)
-- [Datasets](#Dataset)
-- [Getting Started](#Getting-Started)
-  - [Task](#Task)
-  - [Training](#Training)
-  - [Evaluation](#Evaluation)
-- [Citation](#Citation)
-- [License](#License)
+### Example Commands
 
+#### End-Effector Position (eef_pos_delta)
+```bash
+# X-axis only (index 0)
+python eval.py --args.action-noise-scale 0.1 --args.action-noise-dim action.eef_pos_delta[0]
 
-# Installtion
-Please run the following commands in the given order to install the dependency for **LIBERO**.
+# Y-axis only (index 1)
+python eval.py --args.action-noise-scale 0.1 --args.action-noise-dim action.eef_pos_delta[1]
+
+# Z-axis only (index 2)
+python eval.py --args.action-noise-scale 0.1 --args.action-noise-dim action.eef_pos_delta[2]
 ```
-conda create -n libero python=3.8.13
+
+#### End-Effector Rotation (eef_rot_delta)
+```bash
+# Roll only (index 0)
+python eval.py --args.action-noise-scale 0.05 --args.action-noise-dim "action.eef_rot_delta[0]"
+
+# Pitch only (index 1)
+python eval.py --args.action-noise-scale 0.05 --args.action-noise-dim "action.eef_rot_delta[1]"
+
+# Yaw only (index 2)
+python eval.py --args.action-noise-scale 0.05 --args.action-noise-dim "action.eef_rot_delta[2]"
+```
+
+#### Gripper Control (gripper_close)
+```bash
+# Finger 1 only (index 0)
+python eval.py --args.action-noise-scale 0.1 --args.action-noise-dim "action.gripper_close[0]"
+
+# Finger 2 only (index 1)
+python eval.py --args.action-noise-scale 0.1 --args.action-noise-dim "action.gripper_close[1]"
+```
+
+---
+
+## 🔧 Environment Setup
+
+### Node 8 Configuration (메모임 안함)
+```bash
+# Setup robosuite log path
+sed -i 's|/tmp/robosuite.log|/home/taywonmin/robosuite.log|' /home/taywonmin/miniconda3/envs/libero/lib/python3.8/site-packages/robosuite/utils/log_utils.py
+touch /home/taywonmin/robosuite.log
+chmod 600 /home/taywonmin/robosuite.log
+```
+
+### Recovery (if needed)
+```bash
+# Restore original path
+sed -i 's|/home/taywonmin/robosuite.log|/tmp/robosuite.log|' /home/taywonmin/miniconda3/envs/libero/lib/python3.8/site-packages/robosuite/utils/log_utils.py
+```
+
+### Checkpoint Location
+```
+/mnt/lustre/slurm/users/taywonmin/rsec/model/gr00tn1.5/checkpoint-60000
+```
+
+---
+
+## 🎬 Headless Rendering Setup
+
+### Problem
+When running simulation environments in headless environments (Vast.ai, Docker, etc.), OpenGL errors occur:
+- `AttributeError: 'NoneType' object has no attribute 'glGetError'`
+- `ImportError: Cannot initialize a EGL device display... PLATFORM_DEVICE extension not supported`
+
+### Solution: CPU Rendering with OSMesa
+
+#### Step 1: Install Mesa Libraries
+```bash
 conda activate libero
-git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
-cd LIBERO
-pip install -r requirements.txt
-pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+conda install -c conda-forge mesalib
 ```
 
-Then install the `libero` package:
-```
-pip install -e .
-```
+#### Step 2: Set Environment Variables
+```bash
+export PYOPENGL_PLATFORM=osmesa
+export MUJOCO_GL=osmesa
 
-# Datasets
-We provide high-quality human teleoperation demonstrations for the four task suites in **LIBERO**. To download the demonstration dataset, run:
-```python
-python benchmark_scripts/download_libero_datasets.py
-```
-By default, the dataset will be stored under the ```LIBERO``` folder and all four datasets will be downloaded. To download a specific dataset, use
-```python
-python benchmark_scripts/download_libero_datasets.py --datasets DATASET
-```
-where ```DATASET``` is chosen from `[libero_spatial, libero_object, libero_100, libero_goal`.
-
-**NEW!!!**
-
-Alternatively, you can download the dataset from HuggingFace by using:
-```python
-python benchmark_scripts/download_libero_datasets.py --use-huggingface
+# Run evaluation
+python eval.py
 ```
 
-This option can also be combined with the specific dataset selection:
-```python
-python benchmark_scripts/download_libero_datasets.py --datasets DATASET --use-huggingface
+---
+
+## 📖 Model Inference Service
+
+### Method 0: Direct Checkpoint Access (via SLURM)
+Since this is a SLURM environment, map the checkpoint path directly without downloading.
+
+### Method 1: Download Model from Google Drive
+
+#### Download entire model folder
+```bash
+# Install gdown
+pip install gdown
+
+# Download LIBERO-10 model
+gdown --folder https://drive.google.com/drive/folders/1rlbXnm-BtRCHCvghMa7CsrNr0B8-7c0I
+
+# Download LIBERO Object model
+gdown --folder https://drive.google.com/drive/u/1/folders/121lEY_nt3PRFFY-qjhPmyhMckWUguMqX
+
+# Move to runs directory
+mv libero_object ./runs/libero_object
 ```
 
-The datasets hosted on HuggingFace are available at [here](https://huggingface.co/datasets/yifengzhu-hf/LIBERO-datasets).
-
-
-# Getting Started
-
-For a detailed walk-through, please either refer to the documentation or the notebook examples provided under the `notebooks` folder. In the following, we provide example scripts for retrieving a task, training and evaluation.
-
-## Task
-
-The following is a minimal example of retrieving a specific task from a specific task suite.
-```python
-from libero.libero import benchmark
-from libero.libero.envs import OffScreenRenderEnv
-
-
-benchmark_dict = benchmark.get_benchmark_dict()
-task_suite_name = "libero_10" # can also choose libero_spatial, libero_object, etc.
-task_suite = benchmark_dict[task_suite_name]()
-
-# retrieve a specific task
-task_id = 0
-task = task_suite.get_task(task_id)
-task_name = task.name
-task_description = task.language
-task_bddl_file = os.path.join(get_libero_path("bddl_files"), task.problem_folder, task.bddl_file)
-print(f"[info] retrieving task {task_id} from suite {task_suite_name}, the " + \
-      f"language instruction is {task_description}, and the bddl file is {task_bddl_file}")
-
-# step over the environment
-env_args = {
-    "bddl_file_name": task_bddl_file,
-    "camera_heights": 128,
-    "camera_widths": 128
-}
-env = OffScreenRenderEnv(**env_args)
-env.seed(0)
-env.reset()
-init_states = task_suite.get_task_init_states(task_id) # for benchmarking purpose, we fix the a set of initial states
-init_state_id = 0
-env.set_init_state(init_states[init_state_id])
-
-dummy_action = [0.] * 7
-for step in range(10):
-    obs, reward, done, info = env.step(dummy_action)
-env.close()
-```
-Currently, we only support sparse reward function (i.e., the agent receives `+1` when the task is finished). As sparse-reward RL is extremely hard to learn, currently we mainly focus on lifelong imitation learning.
-
-## Training
-To start a lifelong learning experiment, please choose:
-- `BENCHMARK` from `[LIBERO_SPATIAL, LIBERO_OBJECT, LIBERO_GOAL, LIBERO_90, LIBERO_10]`
-- `POLICY` from `[bc_rnn_policy, bc_transformer_policy, bc_vilt_policy]`
-- `ALGO` from `[base, er, ewc, packnet, multitask]`
-
-then run the following:
-
-```shell
-export CUDA_VISIBLE_DEVICES=GPU_ID && \
-export MUJOCO_EGL_DEVICE_ID=GPU_ID && \
-python libero/lifelong/main.py seed=SEED \
-                               benchmark_name=BENCHMARK \
-                               policy=POLICY \
-                               lifelong=ALGO
-```
-Please see the documentation for the details of reproducing the study results.
-
-## Evaluation
-
-By default the policies will be evaluated on the fly during training. If you have limited computing resource of GPUs, we offer an evaluation script for you to evaluate models separately.
-
-```shell
-python libero/lifelong/evaluate.py --benchmark BENCHMARK_NAME \
-                                   --task_id TASK_ID \ 
-                                   --algo ALGO_NAME \
-                                   --policy POLICY_NAME \
-                                   --seed SEED \
-                                   --ep EPOCH \
-                                   --load_task LOAD_TASK \
-                                   --device_id CUDA_ID
+#### Run Inference Service
+```bash
+python scripts/inference_service.py --server \
+    --model_path ./runs/libero_object \
+    --embodiment_tag new_embodiment \
+    --data_config libero_single_view \
+    --denoising_steps 4 \
+    --port 5555
 ```
 
-# Citation
-If you find **LIBERO** to be useful in your own research, please consider citing our paper:
+### Method 2: Mount Google Drive (Temporary Access)
 
-```bibtex
-@article{liu2023libero,
-  title={LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning},
-  author={Liu, Bo and Zhu, Yifeng and Gao, Chongkai and Feng, Yihao and Liu, Qiang and Zhu, Yuke and Stone, Peter},
-  journal={arXiv preprint arXiv:2306.03310},
-  year={2023}
-}
+#### Install google-drive-ocamlfuse
+```bash
+sudo add-apt-repository ppa:alessandro-strada/ppa
+sudo apt-get update
+sudo apt-get install google-drive-ocamlfuse
 ```
 
-# License
-| Component        | License                                                                                                                             |
-|------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| Codebase         | [MIT License](LICENSE)                                                                                                                      |
-| Datasets         | [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)                 |
+#### Setup Google OAuth Credentials
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google Drive API
+4. Go to Credentials → Create Credentials → OAuth Client ID
+5. Application Type: Desktop Application
+6. Download the client configuration file
+7. Run:
+```bash
+google-drive-ocamlfuse -headless -id YOUR_CLIENT_ID -secret YOUR_CLIENT_SECRET
+```
+
+#### Mount Google Drive
+```bash
+mkdir ./runs/google-drive
+google-drive-ocamlfuse ./runs/google-drive
+```
+
+#### Run Inference Service
+```bash
+python scripts/inference_service.py --server \
+    --model_path ./runs/google-drive/Isaac-GR00T/runs/libero_10_single_view_seed42 \
+    --embodiment_tag new_embodiment \
+    --data_config libero_single_view \
+    --denoising_steps 4 \
+    --port 5555
+```
+
+#### Unmount Google Drive
+```bash
+fusermount -u ./runs/google-drive
+```
+
+---
+
+## 📝 LIBERO Evaluation
+
+### Basic Usage
+```bash
+# First, start the inference server in a separate terminal
+python scripts/inference_service.py --server ...
+
+# Then, run the evaluation script
+python eval.py
+```
+
+### Adding Noise to Actions
+To test the robustness of the policy or encourage different behaviors, inject alternating noise into the model's predicted actions using the `action_noise_scale` hyperparameter.
+
+The script adds a pattern of `++ -- ++ --` (positive, positive, negative, negative, ...) noise for each dimension of the action.
+
+**Example:**
+```bash
+python eval.py --args.action-noise-scale 0.05
+```
+
+By default, `action_noise_scale` is `0.0`, meaning no noise is added.
+
+---memo
+# Install gdown for Google Drive downloads
+pip install gdown
+# Download the entire folder (replace FOLDER_ID with the actual ID)
+# From the link: https://drive.google.com/drive/u/1/folders/1rlbXnm-BtRCHCvghMa7CsrNr0B8-7c0I
+gdown --folder https://drive.google.com/drive/folders/1rlbXnm-BtRCHCvghMa7CsrNr0B8-7c0I #libero_10
+gdown --folder https://drive.google.com/drive/u/1/folders/121lEY_nt3PRFFY-qjhPmyhMckWUguMqX 
+#libero_object
+https://drive.google.com/drive/folders/121lEY_nt3PRFFY-qjhPmyhMckWUguMqX?usp=sharing
+
+
+z -> 2,4  6-> 7

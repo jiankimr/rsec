@@ -1,4 +1,4 @@
-# 물리 메트릭 로깅 및 분석 파이프라인.
+# Analysis metric pipeline
 
 ## 개요
 
@@ -50,7 +50,7 @@ CSV 파일 저장 (timeseries 폴더)
 | **Energy Draw** | Σ max(E, 0) | 모터가 소비한 에너지 |
 | **Energy Regen** | Σ abs(min(E, 0)) | 회생된 에너지 (절댓값) |
 
-### 💾 생성되는 파일
+### 생성되는 파일
 
 **기본 메트릭 (npy 형식):**
 - `torque_*.npy` - 평균 torque (에너지 계산용)
@@ -63,24 +63,14 @@ CSV 파일 저장 (timeseries 폴더)
 **분석 결과 (csv 형식, timeseries 폴더):**
 - `timeseries/metrics_*.csv` - 모든 통계, energy 분석 (life ratio는 비교 분석에서 별도 계산)
 
-### 🚀 빠른 시작
-
-```bash
-# 기본 실행 (메트릭 저장 안함)
-python eval.py --action_noise_scale 0.6
-
-# 메트릭 저장 활성화
-python eval.py --save_metrics true --action_noise_scale 0.6
-
-# 디버그 로깅 포함
-python eval.py --save_metrics true --debug_action true --action_noise_scale 0.6
-```
+### 빠른 시작
+(README.md 파일 명령어 참고)
 
 ---
 
 ---
 
-## 📋 목차
+## 목차
 
 1. [eval.py - 메트릭 수집 및 저장](#evalpy---메트릭-수집-및-저장)
 2. [basic_metric.py - 기본 메트릭 저장](#basic_metricpy---기본-메트릭-저장)
